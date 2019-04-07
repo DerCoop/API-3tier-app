@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+docker-compose up -d
+
+WEB=$(docker-compose port web 80)
+API=$(docker-compose port api 80)
+
+echo "The API is running at $API"
+echo "The WEB is running at $WEB"

@@ -1,0 +1,12 @@
+FROM node
+
+# Create app directory
+WORKDIR /usr/src/web
+
+# Install app dependencies
+COPY node-3tier-app/web/ .
+# fix resolv.conf against local reconfiguration
+RUN echo "nameserver 8.8.8.8">/etc/resolv.conf && npm install && npm audit fix
+
+#EXPOSE 80
+CMD [ "npm", "start" ]

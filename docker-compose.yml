@@ -1,0 +1,49 @@
+version: '3.6'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=rootpw
+      - POSTGRES_USER=rootuser
+      - POSTGRES_DB=rootdb
+    networks:
+      - private
+      - public
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile_api
+    # overwrite system settings
+    #dns: 8.8.8.8
+    environment:
+      - PORT=80
+      - DB=postgres://rootuser:rootpw@db/rootdb
+    depends_on:
+      - db
+    networks:
+      - private
+      - public
+    ports:
+      - 80
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile_web
+    # overwrite system settings
+    #dns: 8.8.8.8
+    environment:
+      - PORT=80
+      - API_HOST=api
+    depends_on:
+      - api
+    networks:
+      - public
+    ports:
+      - 80
+
+networks:
+  public:
+  private:
