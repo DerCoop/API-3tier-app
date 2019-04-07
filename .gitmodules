@@ -1,0 +1,3 @@
+[submodule "node-3tier-app"]
+	path = node-3tier-app
+	url = https://git.api-international.com/api-public/node-3tier-app.git
