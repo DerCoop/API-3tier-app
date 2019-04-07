@@ -9,7 +9,6 @@ services:
       - POSTGRES_DB=rootdb
     networks:
       - private
-      - public
 
   api:
     build:

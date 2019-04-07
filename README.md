@@ -35,6 +35,11 @@ tested with version
       Experimental:     false
 
 
+### update the submodules
+
+    git submodules update --init
+    
+
 ## USAGE
 ### build the images
 
