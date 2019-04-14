@@ -1,0 +1,48 @@
+version: '3.6'
+
+services:
+  db:
+    # TODO define the port the listen
+    image: mongo
+    container_name: db
+    networks:
+      - private
+
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    container_name: app
+    volumes:
+      - type: bind
+        source: ./app
+        target: /var/www/app
+        read_only: true
+    depends_on:
+      - db
+    # there is no need to expose the port to the outside
+    #ports:
+    #  - 5000
+    environment:
+      - DB_HOST=db
+      - DB_PORT=27017
+    networks:
+      - public
+      - private
+
+  web:
+    # TODO define the port and the name of the application
+    build:
+      context: web
+      dockerfile: Dockerfile
+    container_name: web
+    depends_on:
+      - app
+    ports:
+      - 80:80
+    networks:
+      - public
+
+networks:
+  public:
+  private:
